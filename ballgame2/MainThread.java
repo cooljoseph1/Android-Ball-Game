@@ -9,11 +9,23 @@ public class MainThread extends Thread {
     private GameView gameView;
     private boolean running;
     public static Canvas canvas;
+    public static float gravity = 10;
+    public static float elasticity = 0.9f; //Energy lost when bouncing (higher value means less energy is lost
+    public static float bounciness = 0.99f;  //Percent of energy that bounces
+    public static float friction = 0.9f;
+    public static int fps = 30;
 
     public MainThread(SurfaceHolder surfaceHolder, GameView gameView) {
         super();
         this.surfaceHolder = surfaceHolder;
         this.gameView = gameView;
+    }
+
+    public static void setGravity(float g) {
+        gravity = g;
+    }
+    public static float getGravity() {
+        return gravity;
     }
 
     @Override

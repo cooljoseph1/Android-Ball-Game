@@ -7,15 +7,13 @@ import android.graphics.Paint;
 import java.util.Collection;
 
 public interface CharacterSprite {
-    public float getLeft();
-    public float getTop();
-    public float getWidth();
-    public float getHeight();
-    public float getRight();
-    public float getBottom();
-    public float getSquaredDistance(float x, float y);
-    public float padding();
-    public void draw(Canvas canvas);
-    public void update(Collection<CharacterSprite> characterSpriteCollection);
+    float getLeft();
+    float getTop();
+    float getWidth();
+    float getHeight();
+    float getRight();
+    float getBottom();
+    void draw(Canvas canvas);
+    void update(Collection<CharacterSprite> characterSpriteCollection);
 
 }

@@ -109,7 +109,11 @@ public class Line implements CharacterSprite {
     }
 
     @Override
-    public void update(Collection<CharacterSprite> characterSpriteCollection) {
+    public void update(Collection<CharacterSprite> characterSprites, Collection<Line> lineSprites) {
+    }
+
+    public float getCosAngle(float vx, float vy) {
+        return (vx*b-vy*a)/(float)(Math.sqrt(vx*vx+vy*vy));
     }
 
     public float getHeightDist(float x, float y) {

@@ -14,6 +14,6 @@ public interface CharacterSprite {
     float getRight();
     float getBottom();
     void draw(Canvas canvas);
-    void update(Collection<CharacterSprite> characterSpriteCollection);
+    void update(Collection<CharacterSprite> characterSpriteCollection, Collection<Line> lineSprites);
 
 }

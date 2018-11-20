@@ -185,7 +185,7 @@ public class Ball implements CharacterSprite {
     }
 
     @Override
-    public void update(Collection<CharacterSprite> characterSprites) {
+    public void update(Collection<CharacterSprite> characterSprites, Collection<Line> lineSprites) {
 
         onGround = onGroundLast;
         onGroundLast = false;
@@ -197,49 +197,22 @@ public class Ball implements CharacterSprite {
         cy += vy;
         vy += MainThread.gravity / MainThread.fps;
 
-        Line closest = null;
-        float distSquared = 0;
-        do {
-            closest = null;
-            distSquared = 0;
-            for (CharacterSprite chrSprite : characterSprites) {
-                if (!(chrSprite instanceof Line)) {
-                    continue;
-                }
-                Line line = (Line) chrSprite;
-
-            /*if (line.getLeft() >= getRight() || line.getTop() >= getBottom() || line.getRight() <= getLeft() || line.getBottom() <= getTop()) {
-                continue;
-            }*/
-
-                float newHeightDiff = line.getHeightDist(cx, cy);
-                float oldHeightDiff = line.getHeightDist(oldCx, oldCy);
-
-            /*if (((newHeightDiff <= 0) && (oldHeightDiff >= 0)) || ((newHeightDiff >= 0) && (oldHeightDiff <= 0))) {
+        for (Line line : lineSprites) {
+            float distanceSquared = line.getDistanceSquared(cx, cy);
+            if (distanceSquared <= radiusSquared) {
                 collideLine(line);
-            }*/
-
-                float distanceSquared = line.getDistanceSquared(cx, cy);
-                if (distanceSquared <= radiusSquared) {
-                    if (closest == null || distanceSquared <= distSquared) {
-                        closest = line;
-                        distSquared = distanceSquared;
-                    }
-                }
             }
-            if (closest != null) {
-                collideLine(closest);
-            }
-            System.out.println("Still Going");
-            System.out.println(closest.getLeft() + " " + closest.getTop() + " " + distSquared + " " + radiusSquared);
-        } while (closest != null);
-        System.out.println("Done");
+        }
     }
 
     private void collideLine(Line line) {
 
 
         if (line.getLeft() > getRight() || line.getRight() < getLeft() || line.getTop() > getBottom() || line.getBottom() < getTop()) {
+            return;
+        }
+
+        if(line instanceof LineCap && Math.abs(line.getCosAngle(vx,vy))>0.5) {
             return;
         }
 
